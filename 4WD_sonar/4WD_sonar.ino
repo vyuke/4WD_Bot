@@ -1,8 +1,8 @@
 #include <Servo.h>       //调用舵机库文件
 #define ServoPin 12      //定义舵机连接到12号引脚
 #define LED 13           //定义LED为13号引脚
-#define sonar_Echo_Pin 2 //定义超声波传感器Echo的引脚为2号口
-#define sonar_Trig_Pin 3 //定义超声波传感器Trig的引脚为3号口
+#define sonar_Echo_Pin 8 //定义超声波传感器Echo的引脚为2号口
+#define sonar_Trig_Pin 9 //定义超声波传感器Trig的引脚为3号口
 
 #define A_1A 4 //A组电机正反转控制
 #define A_1B 5 //PWM
