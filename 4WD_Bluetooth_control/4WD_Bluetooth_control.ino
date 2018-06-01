@@ -35,11 +35,6 @@ void serialEvent()
 
       Convert(x, y);
 
-      // Serial.print(x);
-      // Serial.print("   ");
-      // Serial.print(y);
-      // Serial.println();
-
       for (int i = 7; i > 0; i--)
       {
         cmd[i] = "";
@@ -55,17 +50,15 @@ void Convert(int x_val, int y_val)//将摇杆向量转化为左右驱动轮速�
   L_motor = 0;
   if(x_val==128||y_val==128)
   {
-  R_motor = 0;
-  L_motor = 0;
+    R_motor = 0;
+    L_motor = 0;
   }
-
   else
   {
-  R_motor -= map(x_val, 0, 255, -255, 255);
-  L_motor += map(x_val, 0, 255, -255, 255);
-
-  R_motor += map(y_val, 0, 255, -255, 255);
-  L_motor += map(y_val, 0, 255, -255, 255);
+    R_motor -= map(x_val, 0, 255, -255, 255);
+    R_motor += map(y_val, 0, 255, -255, 255);
+    L_motor += map(x_val, 0, 255, -255, 255);
+    L_motor += map(y_val, 0, 255, -255, 255);
   }
 
   if (R_motor > 255)
@@ -103,7 +96,6 @@ void motion(int speed_A, int speed_B) //电机速度控制函数。括号内分�
     analogWrite(B_1A, speed_B); //PWM控制速度
     digitalWrite(B_1B, 0);
   }
-
   else
   {
     analogWrite(B_1A, 255 + speed_B); //PWM控制速度
