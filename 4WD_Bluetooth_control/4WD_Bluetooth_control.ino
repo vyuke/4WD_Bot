@@ -1,7 +1,8 @@
 char cmd[7] = "128,128";
-String cmdd = " ";
 int index = 0;
-int x=128, y=128;
+int x = 128, y = 128;
+int R_motor = 0;
+int L_motor = 0;
 char *p;
 
 #define A_1A 4 //A组电机正反转控制
@@ -32,6 +33,8 @@ void serialEvent()
         return;
       y = atoi(p);
 
+      Convert(x, y);
+
       // Serial.print(x);
       // Serial.print("   ");
       // Serial.print(y);
@@ -43,6 +46,43 @@ void serialEvent()
       }
       index = 0;
     }
+  }
+}
+
+void Convert(int x_val, int y_val)//将摇杆向量转化为左右驱动轮速度
+{ 
+  R_motor = 0;
+  L_motor = 0;
+  if(x_val==128||y_val==128)
+  {
+  R_motor = 0;
+  L_motor = 0;
+  }
+
+  else
+  {
+  R_motor -= map(x_val, 0, 255, -255, 255);
+  L_motor += map(x_val, 0, 255, -255, 255);
+
+  R_motor += map(y_val, 0, 255, -255, 255);
+  L_motor += map(y_val, 0, 255, -255, 255);
+  }
+
+  if (R_motor > 255)
+  {
+    R_motor = 255;
+  }
+  else if (R_motor < -255)
+  {
+    R_motor = -255;
+  }
+  else if (L_motor > 255)
+  {
+    L_motor = 255;
+  }
+  else if (L_motor < -255)
+  {
+    L_motor = -255;
   }
 }
 
@@ -81,40 +121,13 @@ void setup()
 }
 
 void loop()
-{ y = map(y, 0, 255, -255, 255);
-  // if (y = 128)
-  // {
-  //   motion(0, 0);
-  // }
-  // else if (y < 128)
-  // {
-  //   y = map(y, 0, 128, -255, 0);
-  // }
-  // else if (y > 128)
-  // {
-  //   y = map(y, 128, 255, 0, 255);
-  // }
-  // motion(y, y);
-  // delay(10);
-  
-  // if (y > 0)
-  // {
-  //   y = map(y, 0, 128, 0, 255);
-  // }
-  // else if (y < 0)
-  // {
-  //   y = map(y, 0, -128, 0, -255);
-  // }
-  // else
-  // {
-  //   y = 0;
-  // }
+{
 
-  Serial.print(x);
+  Serial.print(L_motor);
   Serial.print("   ");
-  Serial.print(y);
+  Serial.print(R_motor);
   Serial.println();
 
-  motion(0, 0);
+  motion(L_motor, R_motor);
   delay(1);
 }
