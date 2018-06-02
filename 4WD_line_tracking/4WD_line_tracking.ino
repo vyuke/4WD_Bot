@@ -1,3 +1,7 @@
+//更多资料欢迎访问我们的官网 http://openjumper.cn/ 或联系邮箱 support@openjumper.com
+//https://openjumper.taobao.com/ --OPENJUMPER官方店铺
+//https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
+
 #define left_line_tracking 8  //左边的巡线传感器链接到pin8
 #define right_line_tracking 9 //右边的巡线传感器链接到pin9
 
