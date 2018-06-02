@@ -1,16 +1,23 @@
-char cmd[7] = "128,128";
-int index = 0;
-int x = 128, y = 128;
-int R_motor = 0;
-int L_motor = 0;
-char *p;
+/*此示例必须与Blinker app联动，下载方式和更多相关资料请访问https://blinker.app/   */
+
+//更多资料欢迎访问我们的官网 http://openjumper.cn/ 或联系邮箱 support@openjumper.com
+//https://openjumper.taobao.com/ --OPENJUMPER官方店铺
+//https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
+
+
+char cmd[7] = "128,128";  //定义一个数组用于抓取蓝牙摇杆的信号
+int index = 0; //定义一个数用于对数组进行操控
+int x = 128, y = 128;  //定义两个变量存储蓝牙摇杆的信号值
+int R_motor = 0;  //定义右轮速度值
+int L_motor = 0; //定义左轮速度值
+char *p;  //定义一个指针用于分离字符串中的指令
 
 #define A_1A 4 //A组电机正反转控制
 #define A_1B 5 //PWM
 #define B_1A 6 //PMW//B组电机正反转控制
 #define B_1B 7 //
 
-void serialEvent()
+void serialEvent()   //当串口有字符串传入后触发函数
 {
   while (Serial.available())
   {
@@ -46,16 +53,16 @@ void serialEvent()
 
 void Convert(int x_val, int y_val)//将摇杆向量转化为左右驱动轮速度
 { 
-  R_motor = 0;
+  R_motor = 0;//初始化轮速
   L_motor = 0;
-  if(x_val==128||y_val==128)
+  if(x_val==128||y_val==128)  //摇杆处于中间位置时速度为零
   {
     R_motor = 0;
     L_motor = 0;
   }
   else
   {
-    R_motor -= map(x_val, 0, 255, -255, 255);
+    R_motor -= map(x_val, 0, 255, -255, 255);//将摇杆的向量模分配到左右两轮的轮速，有优化的可能
     R_motor += map(y_val, 0, 255, -255, 255);
     L_motor += map(x_val, 0, 255, -255, 255);
     L_motor += map(y_val, 0, 255, -255, 255);
@@ -115,11 +122,11 @@ void setup()
 void loop()
 {
 
-  Serial.print(L_motor);
+  Serial.print(L_motor);//串口返回轮速数据
   Serial.print("   ");
   Serial.print(R_motor);
   Serial.println();
 
-  motion(L_motor, R_motor);
+  motion(L_motor, R_motor);//将轮速数据传递到动力函数中
   delay(1);
 }
