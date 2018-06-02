@@ -1,3 +1,7 @@
+//更多资料欢迎访问我们的官网 http://openjumper.cn/ 或联系邮箱 support@openjumper.com
+//https://openjumper.taobao.com/ --OPENJUMPER官方店铺
+//https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
+
 #define A_1A 4 //A组电机正反转控制
 #define A_1B 5 //PWM
 #define B_1A 6 //PMW//B组电机正反转控制
