@@ -39,15 +39,27 @@
  */
 
 // This sketch code is based on the RPLIDAR driver library provided by RoboPeak
+
+//更多资料欢迎访问我们的官网 http://openjumper.cn/ 或联系邮箱 support@openjumper.com
+//https://openjumper.taobao.com/ --OPENJUMPER官方店铺
+//https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
+
+
 #include <RPLidar.h>
 #include <SoftwareSerial.h>
-
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
 RPLidar lidar;
 #define RPLIDAR_MOTOR 3 // The PWM pin for control the speed of RPLIDAR's motor. \
                         // This pin should connected with the RPLIDAR's MOTOCTRL signal
 // #define ARDUINO_RX1 14
 // #define ARDUINO_TX1 15
 // SoftwareSerial mySerial1(ARDUINO_RX1, ARDUINO_TX1);
+
+//float data[2][] = {0};
+float right_distance = 0;
+float left_distance = 0;
 
 #define A_1A 4 //A组电机正反转控制
 #define A_1B 5 //PWM
@@ -93,6 +105,11 @@ void setup()
   // Serial.begin(115200);
   // mySerial1.begin(9600);
 
+  lcd.init();
+  lcd.backlight();
+  // lcd.setCursor(0, 0);
+  // lcd.print("distance");
+
   lidar.begin(Serial);
   pinMode(RPLIDAR_MOTOR, OUTPUT);
 
@@ -104,34 +121,41 @@ void setup()
 
 void loop()
 {
+
   if (IS_OK(lidar.waitPoint()))
   {
+    motion(255, 255);
     float distance = lidar.getCurrentPoint().distance; //distance value in mm unit
     float angle = lidar.getCurrentPoint().angle;       //anglue value in degree
     bool startBit = lidar.getCurrentPoint().startBit;  //whether this point is belong to a new scan
     byte quality = lidar.getCurrentPoint().quality;    //quality of the current measurement
 
-    //perform data processing here...
-    if ((angle > 0 && angle < 30) || (angle > 330 && angle < 360))
+    if (distance > 70)
     {
-      if (distance >= 300)
+      if (angle > 0 && angle <= 90)
       {
-        motion(255, 255);
-        delay(10);
+        right_distance = distance;
       }
-      // else if (distance < 500)
-      // {
-      //   motion(-255, 255);
-      //   delay(400);
-      // }
-    }
-    else
-    {
-      if (distance < 500)
+      else if (angle > 270 && angle <= 360)
       {
-        motion(0, 0);
+        left_distance = distance;
       }
     }
+
+    if (distance < 400 && distance > 70)
+    {
+      if (left_distance > right_distance)
+      {
+        motion(-255, 255);
+        delay(100);
+      }
+      else if (left_distance <= right_distance)
+      {
+        motion(255, -255);
+        delay(100);
+      }
+    }
+    
   }
   else
   {
