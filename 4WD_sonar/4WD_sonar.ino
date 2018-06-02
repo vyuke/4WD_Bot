@@ -1,3 +1,7 @@
+//更多资料欢迎访问我们的官网 http://openjumper.cn/ 或联系邮箱 support@openjumper.com
+//https://openjumper.taobao.com/ --OPENJUMPER官方店铺
+//https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
+
 #include <Servo.h>       //调用舵机库文件
 #define ServoPin 12      //定义舵机连接到12号引脚
 #define LED 13           //定义LED为13号引脚
