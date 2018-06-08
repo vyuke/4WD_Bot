@@ -2,8 +2,8 @@
 //https://openjumper.taobao.com/ --OPENJUMPER官方店铺
 //https://shop555818949.taobao.com/ --OPENJUMPER企业店铺
 
-#define left_IR_switch 10  //左边的巡线传感器链接到pin8
-#define right_IR_switch 11 //右边的巡线传感器链接到pin9
+#define left_IR_switch 16  //左边的巡线传感器链接到A2(pin 16)
+#define right_IR_switch 17 //右边的巡线传感器链接到A3(pin 17)
 
 #define A_1A 4 //A组电机正反转控制
 #define A_1B 5 //PWM
