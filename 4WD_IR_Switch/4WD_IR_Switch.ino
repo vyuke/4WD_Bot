@@ -58,13 +58,15 @@ void loop()
   }
   Serial.print("\n"); //换行
 
-  if ((IR_switch_state[0] == 0) && IR_switch_state[1]) //右端传感器检测到障碍物
+  if ((IR_switch_state[0] == 0) && IR_switch_state[1]) //左端传感器检测到障碍物
   {
-    motion(0, 255); //左转
-  }
-  else if (IR_switch_state[0] && (IR_switch_state[1] == 0)) //左端传感器检测到障碍物
-  {
+
     motion(255, 0); //右转
+  }
+  else if (IR_switch_state[0] && (IR_switch_state[1] == 0)) //右端传感器检测到障碍物
+  {
+
+    motion(0, 255); //左转
   }
   else if ((IR_switch_state[0] == 0) && (IR_switch_state[1] == 0)) //lost line
   {
